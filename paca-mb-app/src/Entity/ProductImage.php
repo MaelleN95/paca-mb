@@ -69,4 +69,14 @@ class ProductImage
 
         return $this;
     }
+
+    public function getPreview(): ?string
+    {
+        return $this->filename ? '/uploads/product_images/' . $this->filename : null;
+    }
+
+    public function __toString(): string
+    {
+        return $this->filename ?? 'Nouvelle image';
+    }
 }

@@ -191,4 +191,10 @@ class Product
 
         return $this;
     }
+
+    public function getFirstImage(): ?string
+    {
+        $firstImage = $this->productImages->first();
+        return $firstImage ? $firstImage->getFilename() : null;
+    }
 }

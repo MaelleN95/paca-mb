@@ -71,10 +71,10 @@ class ProductCrudController extends AbstractCrudController
                 'by_reference' => false,
             ])
             ->onlyOnForms();
-            
+                    
         // Afficher les miniatures dans l'index (liste)
-        yield ImageField::new('productImages[0].filename', 'Image')
-            ->setBasePath('/uploads')
+        yield ImageField::new('firstImage', 'Image')
+            ->setBasePath('/uploads/product_images/')
             ->onlyOnIndex();
 
         yield DateTimeField::new('createdAt', 'Créé le')

@@ -6,8 +6,8 @@ use App\Entity\Product;
 use App\Entity\ProductImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProductImageType extends AbstractType
 {
@@ -15,10 +15,12 @@ class ProductImageType extends AbstractType
     {
 
     $builder
-        ->add('imageFile', FileType::class, [
-            'label' => 'Image',
+        ->add('imageFile', VichImageType::class, [
+            'label' => 'Image (JPG ou PNG)',
             'required' => false,
-            'mapped' => true,
+            'download_uri' => false,
+            'allow_delete' => true,
+            'image_uri' => true
         ]);
     }
 
