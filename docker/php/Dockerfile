@@ -16,4 +16,7 @@ COPY conf/docker-php-custom-build.ini /usr/local/etc/php/conf.d/
 RUN curl -sS https://get.symfony.com/cli/installer | bash && \
     mv ~/.symfony*/bin/symfony /usr/local/bin/symfony
 
+RUN apt-get update && apt-get install -y libicu-dev \
+    && docker-php-ext-install intl
+    
 WORKDIR /var/www/html
