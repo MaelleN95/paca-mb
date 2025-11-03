@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualités — MachinesBois{% endblock %}
+
+{% block body %}
+  <header class="section-header">
+    <h1>Actualités</h1>
+  </header>
+
+  <div class="news-list">
+    {% for item in newsList %}
+      <article class="card news-card">
+        <h3><a href="{{ path('news_show', {slug: item.slug}) }}">{{ item.title }}</a></h3>
+        <p class="muted small">{{ item.publishedAt ? item.publishedAt|date('d/m/Y') : '' }}</p>
+        <p>{{ item.content|striptags|slice(0,180) ~ (item.content|length > 180 ? '…' : '') }}</p>
+      </article>
+    {% else %}
+      <p>Aucune actualité pour l'instant.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

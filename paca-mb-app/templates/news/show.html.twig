@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ news.title }} — MachinesBois{% endblock %}
+
+{% block body %}
+  <nav class="breadcrumb"><a href="{{ path('home') }}">Accueil</a> › <a href="{{ path('news_index') }}">Actualités</a> › {{ news.title }}</nav>
+
+  <article class="news-detail">
+    <header>
+      <h1>{{ news.title }}</h1>
+      <p class="muted small">{{ news.publishedAt ? news.publishedAt|date('d/m/Y') : '' }}</p>
+    </header>
+
+    {% if news.image %}
+      <img class="news-image" src="{{ asset('uploads/' ~ news.image) }}" alt="{{ news.title }}">
+    {% endif %}
+
+    <div class="content">
+      {{ news.content|raw }}
+    </div>
+  </article>
+{% endblock %}

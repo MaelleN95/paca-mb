@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact — MachinesBois{% endblock %}
+
+{% block body %}
+  <header class="section-header">
+    <h1>Contact</h1>
+    <p class="muted">Utilise ce formulaire pour nous envoyer un message.</p>
+  </header>
+
+  <div class="contact-wrap">
+    {{ form_start(contactForm) }}
+      <div class="form-grid">
+        <div>{{ form_row(contactForm.name) }}</div>
+        <div>{{ form_row(contactForm.email) }}</div>
+        <div class="full">{{ form_row(contactForm.subject) }}</div>
+        <div class="full">{{ form_row(contactForm.message) }}</div>
+      </div>
+      <div class="actions">{{ form_row(contactForm.send) }}</div>
+    {{ form_end(contactForm) }}
+  </div>
+{% endblock %}

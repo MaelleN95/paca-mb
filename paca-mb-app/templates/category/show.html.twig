@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }} — MachinesBois{% endblock %}
+
+{% block body %}
+  <nav class="breadcrumb"><a href="{{ path('home') }}">Accueil</a> › {{ category.name }}</nav>
+
+  <header class="section-header">
+    <h1>{{ category.name }}</h1>
+    {% if category.description %}<p class="muted">{{ category.description }}</p>{% endif %}
+  </header>
+
+  <section class="product-list">
+    <div class="grid grid-cols-3">
+      {% for product in products %}
+        {% include 'partials/_product_card.html.twig' with { product: product } %}
+      {% else %}
+        <p>Aucun produit dans cette catégorie.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
+

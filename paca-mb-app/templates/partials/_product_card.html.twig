@@ -1,0 +1,23 @@
+<article class="card product-card">
+  <a class="product-link" href="{{ path('product_show', {slug: product.slug}) }}">
+    <div class="product-thumb">
+      {% set firstImage = product.images|first %}
+      {% if firstImage %}
+        <img src="{{ asset('uploads/' ~ firstImage.filename) }}" alt="{{ product.title }}">
+      {% else %}
+        <div class="placeholder">No image</div>
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <h3>{{ product.title }}</h3>
+      <p class="muted small">
+        {% if product.brand %}{{ product.brand.name }} — {% endif %}
+        {{ product.reference ?: '' }}
+      </p>
+
+      {% if product.price is not null %}
+        <p class="price">{{ product.price }} €</p>
+      {% endif %}
+    </div>
+  </a>
+</article>

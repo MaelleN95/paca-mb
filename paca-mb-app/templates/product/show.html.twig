@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.title }} — MachinesBois{% endblock %}
+
+{% block body %}
+  <nav class="breadcrumb"><a href="{{ path('home') }}">Accueil</a> ›
+    <a href="{{ path('category_show', {slug: product.category.slug}) }}">{{ product.category.name }}</a> ›
+    {{ product.title }}
+  </nav>
+
+  <article class="product-detail">
+    <header>
+      <h1>{{ product.title }}</h1>
+      <p class="muted">
+        {% if product.brand %}Marque: {{ product.brand.name }}{% endif %}
+        {% if product.reference %} — Réf: {{ product.reference }}{% endif %}
+      </p>
+    </header>
+
+    <div class="product-grid">
+      <div class="gallery">
+        {% for img in product.images %}
+          <img src="{{ asset('uploads/' ~ img.filename) }}" alt="{{ product.title }}">
+        {% else %}
+          <div class="placeholder large">Pas d'image</div>
+        {% endfor %}
+      </div>
+
+      <div class="product-meta">
+        <section class="description">
+          {{ product.description|raw }}
+        </section>
+
+        {% if product.price is not null %}
+          <p class="price large">{{ product.price }} €</p>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+{% endblock %}

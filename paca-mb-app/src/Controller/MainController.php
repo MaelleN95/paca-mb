@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Controller;
+
+use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+final class MainController extends AbstractController
+{
+    #[Route('/', name: 'home')]
+    public function index(CategoryRepository $categoryRepo): Response
+    {
+        $categories = $categoryRepo->findBy([], ['name' => 'ASC']);
+
+        return $this->render('main/index.html.twig', [
+            'categories' => $categories,
+        ]);
+    }
+}

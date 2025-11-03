@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil — MachinesBois{% endblock %}
+
+{% block body %}
+  <section class="hero">
+    <h1>Machines et outils pour le travail du bois</h1>
+    <p class="lead">Catalogue, occasions et actualités — prototype pédagogique.</p>
+  </section>
+
+  <section class="categories">
+    <h2>Catégories</h2>
+    <div class="grid grid-cols-3">
+      {% for category in categories %}
+        <article class="card category-card">
+          <h3><a href="{{ path('category_show', {slug: category.slug}) }}">{{ category.name }}</a></h3>
+          {% if category.description %}
+            <p class="muted">{{ category.description|striptags|slice(0,120) ~ (category.description|length > 120 ? '…' : '') }}</p>
+          {% endif %}
+        </article>
+      {% else %}
+        <p>Aucune catégorie trouvée.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
+
