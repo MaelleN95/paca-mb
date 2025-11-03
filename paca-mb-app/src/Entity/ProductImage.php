@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProductImageRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ProductImageRepository::class)]
 class ProductImage
 {
@@ -19,8 +22,36 @@ class ProductImage
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $filename = null;
 
+    // Champ non persisté pour le formulaire d’upload
+    #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'filename')]
+    private ?File $imageFile = null;
+
     #[ORM\Column(nullable: true)]
-    private ?int $position = null;
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(?string $filename): void
+    {
+        $this->filename = $filename;
+    }
 
     public function getId(): ?int
     {
@@ -35,30 +66,6 @@ class ProductImage
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
-
-        return $this;
-    }
-
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    public function setFilename(?string $filename): static
-    {
-        $this->filename = $filename;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(?int $position): static
-    {
-        $this->position = $position;
 
         return $this;
     }

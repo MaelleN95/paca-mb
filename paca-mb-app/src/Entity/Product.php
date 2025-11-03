@@ -50,7 +50,7 @@ class Product
     #[ORM\OneToMany(
         mappedBy: 'product',
         targetEntity: ProductImage::class,
-        cascade: ['persist', 'remove'], // <-- ici
+        cascade: ['persist', 'remove'],
         orphanRemoval: true
     )]
     private Collection $productImages;

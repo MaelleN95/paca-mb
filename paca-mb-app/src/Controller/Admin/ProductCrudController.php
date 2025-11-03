@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -64,13 +65,17 @@ class ProductCrudController extends AbstractCrudController
         yield BooleanField::new('isUsed', 'Produit d’occasion ?');
 
         yield CollectionField::new('productImages', 'Images')
+            ->setEntryType(ProductImageType::class)
             ->setEntryIsComplex(true)
             ->setFormTypeOptions([
-                'entry_type' => ProductImageType::class,
                 'by_reference' => false,
             ])
             ->onlyOnForms();
-
+            
+        // Afficher les miniatures dans l'index (liste)
+        yield ImageField::new('productImages[0].filename', 'Image')
+            ->setBasePath('/uploads')
+            ->onlyOnIndex();
 
         yield DateTimeField::new('createdAt', 'Créé le')
             ->hideOnForm();
