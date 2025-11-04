@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les outils{% endblock %}
+
+{% block body %}
+    <h1>Les outils</h1>
+
+    <ul>
+        {% for tool in tools %}
+            <li>
+                <a href="{{ path('tool_show', {'id': tool.id}) }}">
+                    {{ tool.name }}
+                </a>
+            </li>
+        {% else %}
+            <li>Aucun outil trouvé.</li>
+        {% endfor %}
+
+{% endblock %}

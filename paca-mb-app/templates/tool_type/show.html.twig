@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ toolType.name }} — Paca Machine à bois{% endblock %}
+
+{% block body %}
+  <nav class="breadcrumb">
+    <a href="{{ path('home') }}">Accueil</a> › {{ toolType.name }}
+  </nav>
+
+  <section class="tooltype-detail">
+    <h1>{{ toolType.name }}</h1>
+
+    <h2>Outils de cette catégorie</h2>
+    {% if tools|length > 0 %}
+      <ul class="tool-list">
+        {% for tool in tools %}
+          <li>
+            <a href="{{ path('tool_show', { id: tool.id }) }}">
+              {{ tool.name }}
+            </a>
+            {% if tool.products|length > 0 %}
+              ({{ tool.products|length }} produit{{ tool.products|length > 1 ? 's' : '' }})
+            {% else %}
+              (aucun produit)
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Aucun outil enregistré pour ce type.</p>
+    {% endif %}
+  </section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ tool.name }} — Paca Machine à bois{% endblock %}
+
+{% block body %}
+  <h1>{{ tool.name }}</h1>
+
+  <h2>Produits associés</h2>
+  <ul>
+    {% for product in products %}
+      <li>
+        <a href="{{ path('product_show', { slug: product.slug }) }}">
+          {{ product.title }}
+        </a>
+        {% if product.price %}
+          - {{ product.price }} €
+        {% endif %}
+      </li>
+    {% else %}
+      <li>Aucun produit pour cet outil.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

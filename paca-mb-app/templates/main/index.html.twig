@@ -3,32 +3,23 @@
 {% block title %}Accueil — MachinesBois{% endblock %}
 
 {% block body %}
-  <section class="hero">
-    <h1>Machines et outils pour le travail du bois</h1>
-    <p class="lead">Catalogue, occasions et actualités — prototype pédagogique.</p>
-  </section>
 
-  <section class="tools">
-    <h2>Types d'outils</h2>
-    <div class="grid grid-cols-3 gap-4">
-      {% for tool in tools %}
-        <article class="card tool-card">
-          <h3>
-            <a href="{{ path('tool_show', {slug: tool.slug}) }}">
-              {{ tool.type }} — {{ tool.name }}
+<h1>Bienvenue sur le site de Paca Machine à Bois</h1>
+<p>Découvrez nos outils et types d'outils pour le travail du bois.</p>
+
+{% if toolTypes is empty %}
+    <p>Aucun type d'outil disponible pour le moment.</p>
+{% else %}
+    <h2>Types d'outils disponibles :</h2>
+    <ul>
+    {% for toolType in toolTypes %}
+        <li>
+            <a href="{{ path('tooltype_show', {'id': toolType.id}) }}">
+                {{ toolType.name }}
             </a>
-          </h3>
-          {% if tool.description %}
-            <p class="muted">
-              {{ tool.description|striptags|slice(0,120) ~ (tool.description|length > 120 ? '…' : '') }}
-            </p>
-          {% endif %}
-        </article>
-      {% else %}
-        <p>Aucun outil trouvé.</p>
-      {% endfor %}
-    </div>
-  </section>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+ 
 {% endblock %}
-
-

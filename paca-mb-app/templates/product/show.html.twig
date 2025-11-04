@@ -4,38 +4,65 @@
 
 {% block body %}
   <nav class="breadcrumb">
-    <a href="{{ path('home') }}">Accueil</a> ›
-    <a href="{{ path('tool_show', {slug: product.tool.slug}) }}">
-      {{ product.tool.type }} — {{ product.tool.name }}
-    </a> ›
-    {{ product.title }}
+    <a href="{{ path('home') }}">Accueil</a>
+    {% if product.tool and product.tool.toolType %}
+      › <a href="{{ path('tool_index') }}">{{ product.tool.toolType.name }}</a>
+      › <a href="{{ path('tool_show', {id: product.tool.id}) }}">{{ product.tool.name }}</a>
+    {% endif %}
+    › {{ product.title }}
   </nav>
 
   <article class="product-detail">
     <header>
       <h1>{{ product.title }}</h1>
       <p class="muted">
-        {% if product.reference %} — Réf: {{ product.reference }}{% endif %}
-        {% if product.manufacturer %} — Fabricant: {{ product.manufacturer.name }}{% endif %}
+        {% if product.reference %}
+          Référence : {{ product.reference }}
+        {% endif %}
+        {% if product.manufacturer %}
+          — Fabricant : {{ product.manufacturer.name }}
+        {% endif %}
       </p>
     </header>
 
     <div class="product-grid">
       <div class="gallery">
-        {% for img in product.productImages %}
-          <img src="{{ asset('uploads/' ~ img.filename) }}" alt="{{ product.title }}">
+        {% if product.productImages|length > 0 %}
+          {% for img in product.productImages %}
+            <img 
+              src="{{ asset('uploads/product_images/' ~ img.filename) }}" 
+              alt="{{ product.title }}" 
+              class="product-image"
+            >
+          {% endfor %}
         {% else %}
-          <div class="placeholder large">Pas d'image</div>
-        {% endfor %}
+          <div class="placeholder large">Pas d’image disponible</div>
+        {% endif %}
       </div>
 
       <div class="product-meta">
         <section class="description">
-          {{ product.description|raw }}
+          <h2>Description</h2>
+          <p>{{ product.description|raw }}</p>
         </section>
 
         {% if product.price is not null %}
           <p class="price large">{{ product.price }} €</p>
+        {% endif %}
+
+        {% if product.isUsed %}
+          <p class="used-label">Produit d’occasion</p>
+        {% endif %}
+
+        {% if product.technicalSpecifications %}
+          <section class="specs">
+            <h2>Caractéristiques techniques</h2>
+            <ul>
+              {% for key, value in product.technicalSpecifications %}
+                <li>{{ value }}</li>
+              {% endfor %}
+            </ul>
+          </section>
         {% endif %}
       </div>
     </div>
