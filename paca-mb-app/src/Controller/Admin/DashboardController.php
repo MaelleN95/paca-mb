@@ -3,10 +3,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Manufacturer;
 use App\Entity\Product;
-use App\Entity\Category;
 use App\Entity\News;
-
+use App\Entity\Tool;
+use App\Entity\ToolType;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -66,7 +67,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Catalogue');
         yield MenuItem::linkToCrud('Produits', 'fa fa-box', Product::class);
-        yield MenuItem::linkToCrud('Catégories', 'fa fa-folder', Category::class);
+        yield MenuItem::linkToCrud('Outils', 'fa fa-box', Tool::class);
+        yield MenuItem::linkToCrud('Types d\'outils', 'fa fa-box', ToolType::class);
+        yield MenuItem::linkToCrud('Fabricants', 'fa fa-box', Manufacturer::class);
 
         yield MenuItem::section('Contenu');
         yield MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', News::class);
@@ -81,12 +84,10 @@ class DashboardController extends AbstractDashboardController
     private function getStats(): array
     {
         $products = $this->em->getRepository(Product::class)->count([]);
-        $categories = $this->em->getRepository(Category::class)->count([]);
         $news = $this->em->getRepository(News::class)->count([]);
 
         return [
             'products' => $products,
-            'categories' => $categories,
             'news' => $news,
         ];
     }

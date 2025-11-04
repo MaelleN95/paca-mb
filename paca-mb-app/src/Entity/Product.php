@@ -30,7 +30,7 @@ class Product
     private ?string $reference = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Category $category = null;
+    private ?Tool $tool = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $price = null;
@@ -54,6 +54,12 @@ class Product
         orphanRemoval: true
     )]
     private Collection $productImages;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $technicalSpecifications = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Manufacturer $manufacturer = null;
 
     public function __construct()
     {
@@ -109,15 +115,14 @@ class Product
         return $this->reference;
     }
 
-    public function getCategory(): ?Category
+    public function getTool(): ?Tool
     {
-        return $this->category;
+        return $this->tool;
     }
 
-    public function setCategory(?Category $category): static
+    public function setTool(?Tool $tool): static
     {
-        $this->category = $category;
-
+        $this->tool = $tool;
         return $this;
     }
 
@@ -196,5 +201,28 @@ class Product
     {
         $firstImage = $this->productImages->first();
         return $firstImage ? $firstImage->getFilename() : null;
+    }
+
+    public function getTechnicalSpecifications(): ?array
+    {
+        return $this->technicalSpecifications;
+    }
+
+    public function setTechnicalSpecifications(?array $technicalSpecifications): static
+    {
+        $this->technicalSpecifications = $technicalSpecifications;
+
+        return $this;
+    }
+
+    public function getManufacturer(): ?Manufacturer
+    {
+        return $this->manufacturer;
+    }
+
+    public function setManufacturer(?Manufacturer $manufacturer): static
+    {
+        $this->manufacturer = $manufacturer;
+        return $this;
     }
 }

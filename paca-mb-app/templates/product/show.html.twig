@@ -3,8 +3,11 @@
 {% block title %}{{ product.title }} — MachinesBois{% endblock %}
 
 {% block body %}
-  <nav class="breadcrumb"><a href="{{ path('home') }}">Accueil</a> ›
-    <a href="{{ path('category_show', {slug: product.category.slug}) }}">{{ product.category.name }}</a> ›
+  <nav class="breadcrumb">
+    <a href="{{ path('home') }}">Accueil</a> ›
+    <a href="{{ path('tool_show', {slug: product.tool.slug}) }}">
+      {{ product.tool.type }} — {{ product.tool.name }}
+    </a> ›
     {{ product.title }}
   </nav>
 
@@ -13,12 +16,13 @@
       <h1>{{ product.title }}</h1>
       <p class="muted">
         {% if product.reference %} — Réf: {{ product.reference }}{% endif %}
+        {% if product.manufacturer %} — Fabricant: {{ product.manufacturer.name }}{% endif %}
       </p>
     </header>
 
     <div class="product-grid">
       <div class="gallery">
-        {% for img in product.images %}
+        {% for img in product.productImages %}
           <img src="{{ asset('uploads/' ~ img.filename) }}" alt="{{ product.title }}">
         {% else %}
           <div class="placeholder large">Pas d'image</div>

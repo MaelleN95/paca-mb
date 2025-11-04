@@ -8,20 +8,27 @@
     <p class="lead">Catalogue, occasions et actualités — prototype pédagogique.</p>
   </section>
 
-  <section class="categories">
-    <h2>Catégories</h2>
-    <div class="grid grid-cols-3">
-      {% for category in categories %}
-        <article class="card category-card">
-          <h3><a href="{{ path('category_show', {slug: category.slug}) }}">{{ category.name }}</a></h3>
-          {% if category.description %}
-            <p class="muted">{{ category.description|striptags|slice(0,120) ~ (category.description|length > 120 ? '…' : '') }}</p>
+  <section class="tools">
+    <h2>Types d'outils</h2>
+    <div class="grid grid-cols-3 gap-4">
+      {% for tool in tools %}
+        <article class="card tool-card">
+          <h3>
+            <a href="{{ path('tool_show', {slug: tool.slug}) }}">
+              {{ tool.type }} — {{ tool.name }}
+            </a>
+          </h3>
+          {% if tool.description %}
+            <p class="muted">
+              {{ tool.description|striptags|slice(0,120) ~ (tool.description|length > 120 ? '…' : '') }}
+            </p>
           {% endif %}
         </article>
       {% else %}
-        <p>Aucune catégorie trouvée.</p>
+        <p>Aucun outil trouvé.</p>
       {% endfor %}
     </div>
   </section>
 {% endblock %}
+
 
