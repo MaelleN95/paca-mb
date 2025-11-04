@@ -5,8 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ManufacturerRepository;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ManufacturerRepository::class)]
 class Manufacturer
 {
@@ -20,6 +23,12 @@ class Manufacturer
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logo = null;
+
+    #[Vich\UploadableField(mapping: 'manufacturer_logos', fileNameProperty: 'logo')]
+    private ?File $logoFile = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $webSite = null;
@@ -52,16 +61,38 @@ class Manufacturer
         return $this;
     }
 
+    public function setLogoFile(?File $file = null): void
+    {
+        $this->logoFile = $file;
+
+        if ($file) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
     public function getLogo(): ?string
     {
         return $this->logo;
     }
 
-    public function setLogo(?string $logo): static
+    public function setLogo(?string $logo): void
     {
         $this->logo = $logo;
+    }
 
-        return $this;
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     public function getWebSite(): ?string
