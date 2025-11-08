@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -33,6 +34,11 @@ class Product
     private ?Tool $tool = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
+    #[Assert\Range(
+        notInRangeMessage: 'Le prix doit être compris entre {{ min }} et {{ max }}.',
+        min: 0, // 10 chiffres max (comme DECIMAL(10,0) actuel en DB)
+        max: 9999999999
+    )]
     private ?string $price = null;
 
     #[ORM\Column]
