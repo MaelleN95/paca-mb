@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les types d'outils{% endblock %}
+
+{% block body %}
+    <h1>Les types d'outils</h1>
+
+    <ul>
+        {% for toolsType in toolsTypes %}
+            <li>
+                <a href="{{ path('tooltype_show', {'id': toolsType.id}) }}">
+                    {{ toolsType.name }}
+                </a>
+            </li>
+        {% else %}
+            <li>Aucun type d'outil trouvé.</li>
+        {% endfor %}
+
+{% endblock %}

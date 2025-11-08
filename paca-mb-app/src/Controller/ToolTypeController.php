@@ -16,8 +16,8 @@ final class ToolTypeController extends AbstractController
     {
         $toolsTypes = $toolTypeRepository->findBy([], ['name' => 'ASC']);
 
-        return $this->render('tool/index.html.twig', [
-            'tools' => $toolsTypes,
+        return $this->render('tool_type/index.html.twig', [
+            'toolsTypes' => $toolsTypes,
         ]);
     }
 
