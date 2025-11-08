@@ -7,10 +7,12 @@ use App\Repository\ManufacturerRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[Vich\Uploadable]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ManufacturerRepository::class)]
 class Manufacturer
 {
@@ -137,6 +139,17 @@ class Manufacturer
         $this->slug = $slug;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateSlug(): void
+    {
+        if ($this->name) {
+            $slugger = new AsciiSlugger();
+            $slug = strtolower($slugger->slug($this->name));
+            $this->slug = substr($slug, 0, 255);
+        }
     }
 
     public function getProducts(): Collection { return $this->products; }

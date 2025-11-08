@@ -6,7 +6,6 @@ use App\Form\ProductImageType;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -49,10 +48,6 @@ class ProductCrudController extends AbstractCrudController
         yield TextField::new('reference', 'Référence')
             ->setFormTypeOption('disabled', true)
             ->hideOnForm()
-            ->hideOnIndex();
-
-        yield SlugField::new('slug')
-            ->setTargetFieldName('title')
             ->hideOnIndex();
 
         yield TextEditorField::new('description', 'Description')

@@ -8,8 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
@@ -127,6 +129,17 @@ class Product
         $this->slug = $slug;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateSlug(): void
+    {
+        if ($this->title) {
+            $slugger = new AsciiSlugger();
+            $slug = strtolower($slugger->slug($this->title));
+            $this->slug = substr($slug, 0, 255);
+        }
     }
 
     public function getDescription(): ?string
