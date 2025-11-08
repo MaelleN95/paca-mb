@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ManufacturerRepository::class)]
@@ -19,21 +20,40 @@ class Manufacturer
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du fabricant ne peut pas être vide.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom du fabricant ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logo = null;
 
     #[Vich\UploadableField(mapping: 'manufacturer_logos', fileNameProperty: 'logo')]
+    #[Assert\File(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+        mimeTypesMessage: 'Veuillez uploader une image au format JPG, PNG ou WEBP (max 2 Mo).'
+    )]
     private ?File $logoFile = null;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(
+        message: 'Veuillez entrer une URL valide pour le site web du fabricant.'
+    )]
     private ?string $webSite = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le slug ne peut pas être vide.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le slug ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $slug = null;
 
     #[ORM\OneToMany(mappedBy: 'manufacturer', targetEntity: Product::class)]

@@ -19,12 +19,27 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du produit ne peut pas être vide.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom du produit ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le slug ne peut pas être vide.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le slug ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 10000)]
+    #[Assert\NotBlank(message: 'La description ne peut pas être vide.')]
+    #[Assert\Length(
+        max: 10000,
+        maxMessage: 'La description ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -39,15 +54,25 @@ class Product
         min: 0, // 10 chiffres max (comme DECIMAL(10,0) actuel en DB)
         max: 9999999999
     )]
+    #[Assert\Type(
+        type: 'numeric',
+        message: 'Le prix doit être un nombre valide.'
+    )]
     private ?string $price = null;
 
     #[ORM\Column]
+    #[Assert\Type(
+        type: 'bool',
+        message: 'La valeur de "Produit d’occasion" doit être vrai ou faux.'
+    )]
     private ?bool $isUsed = null;
 
     #[ORM\Column]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /**

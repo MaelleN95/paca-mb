@@ -6,6 +6,7 @@ use App\Repository\ToolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ToolRepository::class)]
 class Tool
@@ -16,6 +17,11 @@ class Tool
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom de l’outil ne peut pas être vide.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom de l’outil ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'tools')]
