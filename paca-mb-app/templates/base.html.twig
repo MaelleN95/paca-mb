@@ -32,7 +32,24 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>© {{ "now"|date("Y") }} MachinesBois — Prototype pédagogique</p>
+      <div class="footer-content">
+        <p>© {{ "now"|date("Y") }} Machines à Bois - Prototype pédagogique</p>
+        <p>Adresse: 123 Rue des Artisans, 75000 Paris, France</p>
+        <p>Téléphone: +33 1 23 45 67 89</p>
+        <p>Email: mail@mail.fr</p>
+      </div>
+      <div class="footer-content">
+        <a href="{{ path('home') }}">Accueil</a>
+        <a href="{{ path('tool_index') }}">Outils</a>
+        <a href="{{ path('contact') }}">Contact</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+      </div>
+    </div>
+    <div class="koji">
+      <a href="https://koji-dev.fr" target="_blank" rel="noopener">
+        <span>Site web créé avec Koji</span>
+      </a>
     </div>
   </footer>
 </body>

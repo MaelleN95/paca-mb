@@ -6,7 +6,7 @@
   --max-w: 1100px;
   --gap: 1rem;
   --muted: #666;
-  --accent: #0b5fff;
+  --accent: #04d900;
   --bg: #f7f8fa;
   --card-bg: #ffffff;
   --radius: 10px;
@@ -27,7 +27,6 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   background: var(--bg);
-  color: #831f1f;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.45;
@@ -210,11 +209,48 @@ button[type='submit'] {
 .small {
   font-size: 0.85rem;
 }
+
+/* footer */
 .site-footer {
-  padding: 1rem 0;
+  padding-top: 1rem;
   margin-top: 2rem;
   border-top: 1px solid #e6e9ee;
   background: #fff;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+footer .container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+footer .container p {
+  margin: 0;
+}
+
+.koji {
+  display:flex;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+  border-top: 1px solid #e6e9ee;
+  color: black;
+  text-decoration: none;
+}
+
+.koji a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 /* responsive */
