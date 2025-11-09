@@ -28,8 +28,15 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+            two_factor:
+                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
+                trusted_parameter_name: _trusted  # Name of the parameter for the trusted device option
 
     access_control:
+        - { path: ^/logout, role: PUBLIC_ACCESS }
+        # This ensures that the form can only be accessed when two-factor authentication is in progress.
+        - { path: ^/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
 
             # activate different ways to authenticate

@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,17 +20,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $authCode;
+
+    #[ORM\Column(type: 'integer')]
+    private int $trustedVersion;
+
+    public function __construct()
+    {
+        $this->trustedVersion = 1;
+    }
 
     public function getId(): ?int
     {
@@ -50,17 +56,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * A visual identifier that represents this user.
-     *
-     * @see UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -70,9 +71,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    /**
-     * @param list<string> $roles
-     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -80,9 +78,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -99,5 +94,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    public function isEmailAuthEnabled(): bool
+    {
+        return true; // This can be a persisted field to switch email code authentication on/off
+    }
+
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->email;
+    }
+
+    public function getEmailAuthCode(): string
+    {
+        if (null === $this->authCode) {
+            throw new \LogicException('The email authentication code was not set');
+        }
+
+        return $this->authCode;
+    }
+
+    public function setEmailAuthCode(string $authCode): void
+    {
+        $this->authCode = $authCode;
+    }
+
+    public function getTrustedTokenVersion(): int
+    {
+        return $this->trustedVersion;
     }
 }
