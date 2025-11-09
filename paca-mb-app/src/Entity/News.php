@@ -15,6 +15,7 @@ class News
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
@@ -22,15 +23,21 @@ class News
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
-
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+    
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+    
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+    
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $publishedAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
-
-    #[ORM\Column]
-    private ?bool $isActive = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $expiresAt = null;
 
     public function getId(): ?int
     {
@@ -73,18 +80,6 @@ class News
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeImmutable
-    {
-        return $this->publishedAt;
-    }
-
-    public function setPublishedAt(?\DateTimeImmutable $publishedAt): static
-    {
-        $this->publishedAt = $publishedAt;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -97,14 +92,50 @@ class News
         return $this;
     }
 
-    public function isActive(): ?bool
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->isActive;
+        return $this->createdAt;
     }
 
-    public function setIsActive(bool $isActive): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->isActive = $isActive;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeImmutable
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(?\DateTimeImmutable $publishedAt): static
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->expiresAt;
+    }
+
+    public function setExpiresAt(?\DateTimeImmutable $expiresAt): static
+    {
+        $this->expiresAt = $expiresAt;
 
         return $this;
     }
