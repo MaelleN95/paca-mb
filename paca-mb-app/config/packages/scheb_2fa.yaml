@@ -18,3 +18,4 @@ scheb_two_factor:
         digits: 8
         sender_email: contact@koji-dev.fr
         sender_name: PACA Machines a bois
+        mailer: App\Mailer\TwoFactorAuthCodeMailer
