@@ -151,11 +151,6 @@ body {
   border-radius: 8px;
 }
 
-/* news */
-.news-list .news-card {
-  margin-bottom: 1rem;
-}
-
 /* contact */
 .contact-wrap {
   max-width: 720px;

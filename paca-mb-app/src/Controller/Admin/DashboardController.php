@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Manufacturer;
 use App\Entity\Product;
-use App\Entity\News;
 use App\Entity\Tool;
 use App\Entity\ToolType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -71,24 +70,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Types d\'outils', 'fa fa-box', ToolType::class);
         yield MenuItem::linkToCrud('Fabricants', 'fa fa-box', Manufacturer::class);
 
-        yield MenuItem::section('Contenu');
-        yield MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', News::class);
 
         yield MenuItem::section('Navigation');
         yield MenuItem::linkToRoute('Retour au site', 'fa fa-globe', 'home');
-    }
-
-    /**
-     * Exemple d’une méthode interne qui pourrait retourner des statistiques
-     */
-    private function getStats(): array
-    {
-        $products = $this->em->getRepository(Product::class)->count([]);
-        $news = $this->em->getRepository(News::class)->count([]);
-
-        return [
-            'products' => $products,
-            'news' => $news,
-        ];
     }
 }
