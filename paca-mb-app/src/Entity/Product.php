@@ -29,7 +29,6 @@ class Product
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Le slug ne peut pas être vide.')]
     #[Assert\Length(
         max: 255,
         maxMessage: 'Le slug ne peut pas dépasser {{ limit }} caractères.'
