@@ -6,15 +6,16 @@ use App\Form\ProductImageType;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ProductCrudController extends AbstractCrudController
@@ -54,7 +55,30 @@ class ProductCrudController extends AbstractCrudController
             ->hideOnIndex();
 
         yield AssociationField::new('tool', 'Type d’outil');
+
+        yield FormField::addPanel()
+            ->setLabel(
+                '<a href="/admin?crudAction=new&crudControllerFqcn=App\Controller\Admin\ToolTypeCrudController"
+                    target="_blank"
+                    class="btn btn-secondary"
+                    title="Si le type d\'outil n\'existe pas encore, cliquez ici pour en créer un nouveau"
+                >
+                    + Créer un type d\'outil
+                </a>'
+            );
+
         yield AssociationField::new('manufacturer', 'Fabricant');
+
+        yield FormField::addPanel()
+            ->setLabel(
+                '<a href="/admin?crudAction=new&crudControllerFqcn=App\Controller\Admin\ManufacturerCrudController"
+                    target="_blank"
+                    class="btn btn-secondary"
+                    title="Si le fabricant n\'existe pas encore, cliquez ici pour en créer un nouveau"
+                >
+                    + Créer un fabricant
+                </a>'
+            );
 
         yield MoneyField::new('price', 'Prix')
             ->setCurrency('EUR')

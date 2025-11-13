@@ -4,11 +4,12 @@ namespace App\Controller\Admin;
 use App\Entity\Tool;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 class ToolCrudController extends AbstractCrudController
 {
@@ -37,6 +38,16 @@ class ToolCrudController extends AbstractCrudController
     {
         yield TextField::new('name', 'Nom');
         yield AssociationField::new('toolType', 'Type d’outil');
+        yield FormField::addPanel()
+            ->setLabel(
+                '<a href="/admin?crudAction=new&crudControllerFqcn=App\Controller\Admin\ToolTypeCrudController"
+                    target="_blank"
+                    class="btn btn-secondary"
+                    title="Si le type d\'outil n\'existe pas encore, cliquez ici pour en créer un nouveau"
+                >
+                    + Créer un type d\'outil
+                </a>'
+            );
     }
 
     public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
