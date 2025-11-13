@@ -61,14 +61,14 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         // SECTION = titre visuel du menu
-        yield MenuItem::section('Tableau de bord');
-        yield MenuItem::linkToDashboard('Accueil Admin', 'fa fa-home');
+        // yield MenuItem::section('Tableau de bord');
+        // yield MenuItem::linkToDashboard('Accueil Admin', 'fa fa-home');
 
         yield MenuItem::section('Catalogue');
-        yield MenuItem::linkToCrud('Produits', 'fa fa-box', Product::class);
-        yield MenuItem::linkToCrud('Outils', 'fa fa-box', Tool::class);
-        yield MenuItem::linkToCrud('Types d\'outils', 'fa fa-box', ToolType::class);
-        yield MenuItem::linkToCrud('Fabricants', 'fa fa-box', Manufacturer::class);
+        yield MenuItem::linkToCrud('Produits', 'fa-solid fa-boxes-stacked', Product::class);
+        yield MenuItem::linkToCrud('Outils', 'fa-solid fa-screwdriver-wrench', Tool::class);
+        yield MenuItem::linkToCrud('Types d\'outils', 'fa-solid fa-tags', ToolType::class);
+        yield MenuItem::linkToCrud('Fabricants', 'fa-solid fa-industry', Manufacturer::class);
 
 
         yield MenuItem::section('Navigation');
