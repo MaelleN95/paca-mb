@@ -2,10 +2,11 @@
 
 namespace App\Mailer;
 
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 use Scheb\TwoFactorBundle\Mailer\AuthCodeMailerInterface;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class TwoFactorAuthCodeMailer implements AuthCodeMailerInterface
 {
@@ -21,7 +22,7 @@ class TwoFactorAuthCodeMailer implements AuthCodeMailerInterface
         $code = $user->getEmailAuthCode();
 
         $email = (new TemplatedEmail())
-            ->from('contact@koji-dev.fr', 'PACA Machines à bois')
+            ->from(new Address('contact@koji-dev.fr', 'PACA Machines à bois'))
             ->to($user->getEmailAuthRecipient())
             ->subject('Votre code de connexion à MachinesBois')
             ->htmlTemplate('emails/2fa_code.html.twig')
