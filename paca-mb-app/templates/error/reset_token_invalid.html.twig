@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lien expiré{% endblock %}
+
+{% block body %}
+<h1>Lien de réinitialisation invalide ou expiré</h1>
+
+<p>Le lien que tu as utilisé n’est plus valide.</p>
+
+<a href="{{ path('forgot_password') }}" class="btn btn-primary">
+    Demander un nouveau lien
+</a>
+{% endblock %}
