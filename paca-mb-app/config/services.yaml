@@ -6,6 +6,7 @@
 parameters:
 
 services:
+    Karser\Recaptcha3Bundle\ReCaptcha\ReCaptcha: '@karser_recaptcha3.google.recaptcha'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

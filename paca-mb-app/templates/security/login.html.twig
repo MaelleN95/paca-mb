@@ -20,6 +20,10 @@
         <label for="password">Password</label>
         <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
         <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+        
+        {# champs caché contenant le token reCAPTCHA #}
+        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+
         <button class="btn btn-lg btn-primary" type="submit">
             Se connecter
         </button>
@@ -27,4 +31,17 @@
             <a href="{{ path('forgot_password') }}">Mot de passe oublié ?</a>
         </p>
     </form>
+
+    {# Script Google #}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ recaptcha_site_key }}', {action: 'login'})
+                .then(function(token) {
+                    document.getElementById('g-recaptcha-response').value = token;
+                    console.log("reCAPTCHA token:", token);
+                });
+        });
+    </script>
 {% endblock %}
